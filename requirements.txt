@@ -1,0 +1,3 @@
+requests
+twelvedata
+websocket-client
