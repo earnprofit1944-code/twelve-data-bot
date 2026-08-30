@@ -59,16 +59,19 @@ send_tg("🤖 Twelve Data Live Bot Active (Rate-Limit Fixed)!")
 
 # Loop through symbols with 12-second intervals
 try:
-    while True:
-        for sym, levels in all_scripts.items():
-            live_price = fetch_price_safe(sym)
-            if live_price:
-                for lvl, target_price in levels.items():
-                    key = f"{sym}_{lvl}"
-                    if key not in triggered:
-                        if ("Up" in lvl and live_price >= target_price) or ("Down" in lvl and live_price <= target_price):
-                            send_tg(f"🚨 {sym} | {lvl}: {target_price} | Live: {live_price}")
-                            triggered.add(key)
+   for sym, levels in all_scripts.items():
+    live_price = fetch_price_safe(sym)
+    if live_price:
+        for lvl, target_price in levels.items():
+            key = f"{sym}_{lvl}"
+            if key not in triggered:
+                if ("Up" in lvl and live_price >= target_price) or ("Down" in lvl and live_price <= target_price):
+                    send_tg(f"🚨 {sym} | {lvl}: {target_price} | Live: {live_price}")
+                    triggered.add(key)
+
+    time.sleep(12)
+
+print("Check completed successfully.")
             
             # Wait 12 seconds per call (Max 5 requests per minute -> Safely under 8/min limit)
             time.sleep(12)
