@@ -1,9 +1,10 @@
 name: Twelve Data Telegram Bot 24/7
 
 on:
-  schedule:
-    - cron: '*/5 * * * *'  # 5 நிமிடங்களுக்கு ஒருமுறை தானாக இயங்கும்
-  workflow_dispatch:        # கையால் இயக்கவும் உதவும்
+  workflow_dispatch: # Run manually from the Actions tab
+  push:
+    branches:
+      - main
 
 jobs:
   run-bot:
@@ -19,11 +20,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install requests
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Run Script
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          TWELVE_DATA_API_KEY: ${{ secrets.TWELVE_DATA_API_KEY }}
+      - name: Run Twelve Data Bot
         run: python twelve_data_bot.py
