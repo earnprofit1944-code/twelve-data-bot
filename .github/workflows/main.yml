@@ -2,7 +2,7 @@ name: Twelve Data Telegram Bot 24/7
 
 on:
   schedule:
-    - cron: '*/15 * * * *'  # 15 நிமிடங்களுக்கு ஒருமுறை தானாக இயங்கும்
+    - cron: '*/5 * * * *'  # 5 நிமிடங்களுக்கு ஒருமுறை தானாக இயங்கும்
   workflow_dispatch:        # கையால் இயக்கவும் உதவும்
 
 jobs:
