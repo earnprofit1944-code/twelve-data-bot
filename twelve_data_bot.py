@@ -2,16 +2,11 @@ import os
 import time
 import requests
 
-# ------------------------------------------------------------------
-# Environment Variables & Credentials
-# ------------------------------------------------------------------
+# Credentials
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
 TWELVE_DATA_API_KEY = os.getenv("TWELVE_DATA_API_KEY")
 
-# ------------------------------------------------------------------
-# Telegram Dispatch Helper
-# ------------------------------------------------------------------
 def send_tg(msg):
     if TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID:
         url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
@@ -21,9 +16,6 @@ def send_tg(msg):
         except Exception as e:
             print(f"Telegram Send Error: {e}")
 
-# ------------------------------------------------------------------
-# Twelve Data Fetching Helper
-# ------------------------------------------------------------------
 def fetch_price_safe(symbol):
     if not TWELVE_DATA_API_KEY:
         print("API Key Missing")
@@ -41,12 +33,10 @@ def fetch_price_safe(symbol):
         print(f"Request Error for {symbol}: {e}")
         return None
 
-# ------------------------------------------------------------------
-# Main Alert Checker Strategy
-# ------------------------------------------------------------------
 def main():
-    # Define targets and trading symbols
-    # Format: "SYMBOL": [("Level Name", Target Price), ...]
+    # Telegram இணைப்பு சரியாக உள்ளதா என்று சோதிக்க
+    send_tg("🧪 Test Alert: Telegram Connection Working Properly!")
+
     targets = {
         "EUR/JPY": [
             ("Down B1_3", 184.93),
@@ -71,7 +61,6 @@ def main():
             if key in triggered:
                 continue
 
-            # Evaluate signal logic based on level direction
             is_up_signal = "Up" in lvl and live_price >= target_price
             is_down_signal = "Down" in lvl and live_price <= target_price
 
@@ -80,13 +69,9 @@ def main():
                 send_tg(alert_msg)
                 triggered.add(key)
 
-        # Sleep briefly between calls to prevent rate-limit bans
         time.sleep(1)
 
     print("Check completed successfully.")
 
 if __name__ == "__main__":
-    main()
-if __name__ == "__main__":
-    send_tg("🧪 Test Message: Telegram Bot Connection Working!")
     main()
