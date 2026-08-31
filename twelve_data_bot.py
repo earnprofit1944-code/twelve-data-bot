@@ -46,7 +46,6 @@ for sym, levels in all_scripts.items():
             key = f"{sym}_{lvl}"
             if key not in triggered:
                 if ("Up" in lvl and live_price >= target_price) or ("Down" in lvl and live_price <= target_price):
-                    send_tg(f"🚨 {sym} | {lvl}: {target_price} | Live: {live_price}")
-                    triggered.add(key)
+                    # send_tg("Twelve Data Live Bot Active (Rate-Limit Fixed)!")
 
 print("Check completed successfully.")
