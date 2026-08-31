@@ -12,9 +12,12 @@ def send_tg(msg):
         url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
         data = {"chat_id": TELEGRAM_CHAT_ID, "text": msg}
         try:
-            requests.post(url, data=data, timeout=10)
+            res = requests.post(url, data=data, timeout=10)
+            print(f"Telegram Response: {res.status_code} - {res.text}")
         except Exception as e:
             print(f"Telegram Send Error: {e}")
+    else:
+        print("Error: Secret Keys (Token/Chat ID) Empty!")
 
 def fetch_price_safe(symbol):
     if not TWELVE_DATA_API_KEY:
@@ -34,8 +37,8 @@ def fetch_price_safe(symbol):
         return None
 
 def main():
-    # Telegram இணைப்பு சரியாக உள்ளதா என்று சோதிக்க
-    send_tg("🧪 Test Alert: Telegram Connection Working Properly!")
+    # Telegram இணைப்பு மற்றும் பிழையைச் சோதிக்க
+    send_tg("🧪 Test Alert: Telegram Connection Test")
 
     targets = {
         "EUR/JPY": [
