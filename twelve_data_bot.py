@@ -87,3 +87,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+if __name__ == "__main__":
+    send_tg("🧪 Test Message: Telegram Bot Connection Working!")
+    main()
